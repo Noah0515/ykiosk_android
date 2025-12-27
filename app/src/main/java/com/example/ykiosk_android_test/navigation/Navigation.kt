@@ -5,6 +5,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ykiosk_android_test.basic.StartScreen
+import com.example.ykiosk_android_test.bluetooth.PrinterListScreen
 import com.example.ykiosk_android_test.order.OrderScreen
 
 @Composable
@@ -20,6 +21,9 @@ fun MainAppNavHost() {
             StartScreen(
                 onNavigateToOrder = {
                     navController.navigate(NavRoute.ORDER)
+                },
+                onNavigateToPrinterList = {
+                    navController.navigate(NavRoute.PRINTER_LIST)
                 }
             )
         }
@@ -32,6 +36,13 @@ fun MainAppNavHost() {
             )
         }
 
+        composable(NavRoute.PRINTER_LIST) {
+            PrinterListScreen (
+                onDeviceSelected = { device ->
+                    println("선택된 기기:${device.name}")
+                }
+            )
+        }
 
         // 파라미터가 있는 화면
     }
