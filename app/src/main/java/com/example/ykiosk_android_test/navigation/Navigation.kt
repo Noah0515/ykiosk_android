@@ -1,12 +1,18 @@
 package com.example.ykiosk_android_test.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.example.ykiosk_android_test.basic.StartScreen
+import com.example.ykiosk_android_test.bluetooth.PrintControlScreen
 import com.example.ykiosk_android_test.bluetooth.PrinterListScreen
+import com.example.ykiosk_android_test.login.LoginScreen
 import com.example.ykiosk_android_test.order.OrderScreen
+import com.example.ykiosk_android_test.store.StoreMainScreen
+import com.example.ykiosk_android_test.view_model.StoreViewModel
 
 @Composable
 fun MainAppNavHost() {

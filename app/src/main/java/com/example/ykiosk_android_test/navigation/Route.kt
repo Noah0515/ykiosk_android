@@ -5,6 +5,10 @@ object NavRoute {
     const val START = "start_screen" // 시작 화면
     const val ORDER = "order_screen" // 주문 화면
     const val PRINTER_LIST = "printer_list_screen" //프린터 목록 화면
+    const val LOGIN = "login_screen"
+
+    const val STOREMAIN = "store_main_screen"
+
     //파라미터 있는 경로
     const val PRINT_CONTROL = "print_control_screen/{address}/{name}"
     const val ORDER_COMPLETE = "order_complete_screen/{storeId}?data={orderData}" // 가게id와 주문정보(json)을 보냄
