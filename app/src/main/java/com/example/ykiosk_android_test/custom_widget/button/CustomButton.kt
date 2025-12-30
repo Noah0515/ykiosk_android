@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,14 +29,26 @@ import com.example.ykiosk_android_test.ui.theme.WhiteSemiLight
 import com.example.ykiosk_android_test.ui.theme.Ykiosk_android_testTheme
 
 @Composable
-fun Button1(text : String = "Button1", onclick : () -> Unit) {
+fun Button1(text : String = "Button1", modifier: Modifier = Modifier, onclick : () -> Unit) {
     Button(
         onClick = onclick,
-        modifier = Modifier
+        modifier = modifier
             .widthIn(96.dp)
             .heightIn(48.dp)
     ) {
         Text(text = text)
+    }
+}
+
+@Composable
+fun Button3(text : String = "Button1", modifier: Modifier = Modifier, onclick : () -> Unit) {
+    Button(
+        onClick = onclick,
+        modifier = modifier
+            .widthIn(96.dp)
+            .heightIn(48.dp)
+    ) {
+        LargeText3(text = text, color = MaterialTheme.colorScheme.onPrimary)
     }
 }
 
@@ -57,8 +70,8 @@ fun CategoryButton(text : String, modifier: Modifier = Modifier, onclick: () -> 
         LargeText4(
             text = text,
             modifier = modifier,
-            color = WhiteSemiLight
-                )
+            color = MaterialTheme.colorScheme.onPrimary
+        )
     }
 }
 

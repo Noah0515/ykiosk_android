@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -84,7 +85,7 @@ fun OrderScreen(onNavigateToOrderComplete : () -> Unit, str : String = "식당 �
                             contentAlignment = Alignment.Center
                         ) {
                             LargeText3(
-                                "메뉴 카테고리"
+                                "메뉴 카테고리", color = MaterialTheme.colorScheme.onPrimary
                             )
                         }
 

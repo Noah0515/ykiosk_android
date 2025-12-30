@@ -3,6 +3,7 @@ package com.example.ykiosk_android_test.custom_widget.text
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -135,7 +136,7 @@ fun LargeText2(text : String, modifier : Modifier = Modifier, color : Color = Da
 }
 
 @Composable
-fun LargeText3(text : String, modifier : Modifier = Modifier, color : Color = Dark2) {
+fun LargeText3(text : String, modifier : Modifier = Modifier, color : Color = MaterialTheme.colorScheme.onPrimary) {
     Text(
         text = text,
         fontSize = 40.sp,
@@ -147,7 +148,7 @@ fun LargeText3(text : String, modifier : Modifier = Modifier, color : Color = Da
 }
 
 @Composable
-fun LargeText4(text : String, modifier : Modifier = Modifier, color : Color = Dark2) {
+fun LargeText4(text : String, modifier : Modifier = Modifier, color : Color = MaterialTheme.colorScheme.onPrimary) {
     Text(
         text = text,
         fontSize = 46.sp,
