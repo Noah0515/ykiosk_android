@@ -13,6 +13,10 @@ object NavRoute {
     const val PRINT_CONTROL = "print_control_screen/{address}/{name}"
     const val ORDER_COMPLETE = "order_complete_screen/{storeId}?data={orderData}" // 가게id와 주문정보(json)을 보냄
 
+    const val PRINTER_LIST_STORE = "printer_list_screen/{storeId}"
+
+    const val KIOSK_MODE = "order_screen/{address}/{name}/{storeId}"
+
     fun orderCompletePath(storeId : String, orderData : String) : String {// json으로 전달. 근데 json은 못가서 string으로 보내고 parsing
         return "order_complete_screen/$storeId?data=$orderData"
     }
@@ -20,5 +24,12 @@ object NavRoute {
     fun printControlPath(address: String, name: String): String {
         // 💡 실제 데이터(MAC 주소, 이름)를 주소 문자열 사이에 끼워 넣습니다.
         return "print_control_screen/$address/$name"
+    }
+    fun printerListStorePath(storeId: String) : String {
+        return "printer_list_screen/$storeId"
+    }
+
+    fun kioskModePath(address: String, name: String, storeId: String) : String {
+        return "order_screen/$address/$name/$storeId"
     }
 }
