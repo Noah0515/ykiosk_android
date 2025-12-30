@@ -26,7 +26,7 @@ import com.example.ykiosk_android_test.ui.theme.Ykiosk_android_testTheme
 @Composable
 fun MyApp(name : String = "Hello!") {
     //HomeScreen(name)
-    StartScreen(onNavigateToOrder = {}, onNavigateToPrinterList = {})
+    StartScreen(onNavigateToOrder = {}, onNavigateToPrinterList = {}, onNavigateToLogin = {})
 }
 
 @Composable
@@ -49,6 +49,7 @@ fun HomeScreen(str : String) {
 fun StartScreen(
     onNavigateToOrder: () -> Unit,
     onNavigateToPrinterList: () -> Unit,
+    onNavigateToLogin: () -> Unit,
     input : String = "StartScreen"
 ){
     BoxWithConstraints (
@@ -89,6 +90,11 @@ fun StartScreen(
                     "프린터 리스트",
                     onclick = onNavigateToPrinterList
                 )
+
+                Button1(
+                    "로그인 화면",
+                    onclick = onNavigateToLogin
+                )
             }
         }
     }
@@ -100,7 +106,7 @@ fun StartScreen(
 @Composable
 fun HomeScreenPreview() {
     Ykiosk_android_testTheme {
-        StartScreen( onNavigateToOrder = {}, onNavigateToPrinterList = {} ,"확인용")
+        StartScreen( onNavigateToOrder = {}, onNavigateToPrinterList = {} , onNavigateToLogin = {}, "확인용")
         //HomeScreen("asdf")
     }
 }
