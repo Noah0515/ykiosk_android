@@ -16,30 +16,26 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.input.key.Key.Companion.Button3
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
-import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.example.ykiosk_android_test.Item.StoreItemRow
-import com.example.ykiosk_android_test.custom_widget.button.Button1
 import com.example.ykiosk_android_test.custom_widget.button.Button3
-import com.example.ykiosk_android_test.custom_widget.text.LargeText3
 import com.example.ykiosk_android_test.custom_widget.text.LargeText4
-import com.example.ykiosk_android_test.order.OrderScreen
 import com.example.ykiosk_android_test.ui.theme.YKioskColors
 import com.example.ykiosk_android_test.ui.theme.Ykiosk_android_testTheme
 import com.example.ykiosk_android_test.view_model.StoreViewModel
 
 
 @Composable
-fun StoreMainScreen(myStoreViewModel: StoreViewModel) {
+fun StoreMainScreen(myStoreViewModel: StoreViewModel, onNavigateToPrinterListStore: (String) -> Unit, navController: NavHostController) {
     BoxWithConstraints (
         modifier = Modifier
             .fillMaxSize()
@@ -120,7 +116,12 @@ fun StoreMainScreen(myStoreViewModel: StoreViewModel) {
                                     verticalArrangement = Arrangement.spacedBy(12.dp)
                                 ) {
                                     items(myStores) { store ->
-                                        StoreItemRow(store)
+                                        StoreItemRow(store = store,
+                                            onNavigateToPrinterListStore = { storeId ->
+                                                println("클릭된 가게 ID: $storeId")
+                                                onNavigateToPrinterListStore(storeId)
+                                            }
+                                        )
                                     }
                                 }
                             }
@@ -156,6 +157,6 @@ fun StoreMainScreenPrev() {
     }
 
     Ykiosk_android_testTheme {
-        StoreMainScreen(myStoreViewModel)
+        //StoreMainScreen(myStoreViewModel, onNavigateToPrinterList = {}, navController = rememberNavController())
     }
 }

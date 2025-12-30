@@ -3,6 +3,7 @@ package com.example.ykiosk_android_test.Item
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,13 +22,14 @@ import com.example.ykiosk_android_test.DTO.response.StoreResponse
 import com.example.ykiosk_android_test.ui.theme.YKioskColors
 
 @Composable
-fun StoreItemRow(store: StoreResponse) {
+fun StoreItemRow(store: StoreResponse, onNavigateToPrinterListStore : (String) -> Unit) {
     // 가로로 긴 레이아웃 구성
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White, shape = RoundedCornerShape(12.dp))
             .border(1.dp, Color.LightGray, shape = RoundedCornerShape(12.dp))
+            .clickable{onNavigateToPrinterListStore(store.storeId)}
             .padding(20.dp), // 안쪽 여백
         horizontalArrangement = Arrangement.SpaceBetween, // 이름은 왼쪽, 상태는 오른쪽에 배치
         verticalAlignment = Alignment.CenterVertically
