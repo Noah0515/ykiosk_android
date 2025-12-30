@@ -24,6 +24,9 @@ fun MainAppNavHost() {
                 },
                 onNavigateToPrinterList = {
                     navController.navigate(NavRoute.PRINTER_LIST)
+                },
+                onNavigateToLogin = {
+                    navController.navigate(NavRoute.LOGIN)
                 }
             )
         }
