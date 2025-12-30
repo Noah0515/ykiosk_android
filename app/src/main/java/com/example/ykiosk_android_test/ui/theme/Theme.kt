@@ -13,6 +13,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
 import androidx.compose.material3.Typography
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.TextStyle
 
 private val DarkColorScheme = darkColorScheme(
@@ -22,9 +23,9 @@ private val DarkColorScheme = darkColorScheme(
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    //primary = Purple40,
+    //secondary = PurpleGrey40,
+    tertiary = Pink40,
 
     /* Other default colors to override
     background = Color(0xFFFFFBFE),
@@ -35,13 +36,29 @@ private val LightColorScheme = lightColorScheme(
     onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
+    primary = YKioskColors.Primary,
+    onPrimary = Color.White, // 오렌지색 버튼 위의 글자색
+    primaryContainer = YKioskColors.ScreenBackground,
+
+    secondary = YKioskColors.Secondary,
+    onSecondary = YKioskColors.TextPrimary,
+
+    background = YKioskColors.ScreenBackground,
+    onBackground = YKioskColors.TextPrimary,
+
+    surface = YKioskColors.CardSurface,
+    onSurface = YKioskColors.InputField,
+    onSurfaceVariant = YKioskColors.SidebarBackground, // 사이드바용
+    tertiaryContainer = YKioskColors.ToastBackground,
+    onTertiaryContainer = YKioskColors.Primary,
+    outline = YKioskColors.TextSecondary // 구분선 등에 사용
 )
 
 @Composable
 fun Ykiosk_android_testTheme(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
-    dynamicColor: Boolean = true,
+    dynamicColor: Boolean = false,
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
@@ -55,7 +72,7 @@ fun Ykiosk_android_testTheme(
     }
 
     MaterialTheme(
-        colorScheme = colorScheme,
+        colorScheme = LightColorScheme,
         typography = AppTypography,
         //typography = Typography,
         content = content

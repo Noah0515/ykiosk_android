@@ -9,6 +9,57 @@ val Pink80 = Color(0xFFEFB8C8)
 val Purple40 = Color(0xFF6650a4)
 val PurpleGrey40 = Color(0xFF625b71)
 val Pink40 = Color(0xFF7D5260)
+//
+val BrandOrange = Color(0xFFF0783C)
+val BrandAmber = Color(0xFFFFC864)
+val WarmCream = Color(0xFFF8F7F2)
+val SoftSand = Color(0xFFF0EEE6)
+val PureWhite = Color(0xFFFFFFFF)
+val IvoryWhite = Color(0xFFFAF9F6)
+val ButterCream = Color(0xFFFFFBEB)
+val DeepChocolate = Color(0xFF3C281E) // 어두운 토스트
+val BrandOrangeDark = Color(0xFFA05028)
+val MutedEarth = Color(0xFF8C8278)
+val TerracottaRed1 = Color(0xFFB24C3D)
+val TerracottaRed2 = Color(0xFF8A3A2F)
+val ForestGreen1 = Color(0xFF6B8E6B)
+val ForestGreen2 = Color(0xFF4F694F)
+
+object YKioskColors {
+    val Primary = BrandOrange
+    val Secondary = BrandAmber
+    val ScreenBackground = WarmCream
+    val SidebarBackground = SoftSand
+    val CardSurface = PureWhite
+    val InputField = IvoryWhite
+    val ToastBackground = ButterCream
+    val ToastInverse = DeepChocolate
+    val TextPrimary = DeepChocolate
+    val ButtonMain = BrandOrange
+    val ButtonMainPressed = BrandOrangeDark
+    val TextSecondary = MutedEarth
+    val ButtonEmphasis = TerracottaRed1
+    val ButtonEmphasisPressed = TerracottaRed2
+    val ButtonCalm = ForestGreen1
+    val ButtonCalmPressed = ForestGreen2
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
 
 val DawnMist = Color(0xFFbbcddc)
 
