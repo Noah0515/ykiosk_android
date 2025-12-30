@@ -39,6 +39,19 @@ fun MainAppNavHost() {
             )
         }
 
+        composable(NavRoute.LOGIN) {
+            LoginScreen(navController = navController)
+        }
+
+        composable(NavRoute.STOREMAIN) {
+            val context= LocalContext.current
+
+            val myStoreViewModel: StoreViewModel = viewModel {
+                StoreViewModel(context)
+            }
+            StoreMainScreen(myStoreViewModel)
+        }
+
         composable(NavRoute.PRINTER_LIST) {
             PrinterListScreen (
                 onDeviceSelected = { device ->
