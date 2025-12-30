@@ -76,9 +76,14 @@ fun CategoryButton(text : String, modifier: Modifier = Modifier, onclick: () -> 
 }
 
 @Composable
-fun GroupButton(text : String, modifier : Modifier = Modifier, onclick: () -> Unit) {
+fun GroupButton(
+    text : String,
+    isSelected: Boolean, // 눌렸을 떄 디자인 달라지게. 나중에 함
+    modifier : Modifier = Modifier,
+    onclick: () -> Unit) {
     Button(
         onClick = onclick,
+
         modifier = modifier
             .customBorder(borderWidth = 8.dp, top = true)
             .sizeIn(
@@ -102,6 +107,6 @@ fun ButtonPreview() {
     Ykiosk_android_testTheme {
         //Button1(onclick = {})
         //CategoryButton("음식") { }
-        GroupButton("커피") { }
+        //GroupButton("커피") { }
     }
 }
