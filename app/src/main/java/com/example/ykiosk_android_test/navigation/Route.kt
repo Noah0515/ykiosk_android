@@ -12,4 +12,8 @@ object NavRoute {
         return "order_complete_screen/$storeId?data=$orderData"
     }
 
+    fun printControlPath(address: String, name: String): String {
+        // 💡 실제 데이터(MAC 주소, 이름)를 주소 문자열 사이에 끼워 넣습니다.
+        return "print_control_screen/$address/$name"
+    }
 }
