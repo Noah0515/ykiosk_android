@@ -3,6 +3,7 @@ package com.example.ykiosk_android_test
 import android.app.Activity
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -30,6 +31,7 @@ import com.example.ykiosk_android_test.bluetooth.BluetoothPermissionHandler
 import com.example.ykiosk_android_test.navigation.MainAppNavHost
 import com.example.ykiosk_android_test.order.OrderScreen
 import com.example.ykiosk_android_test.ui.theme.Ykiosk_android_testTheme
+import com.kakao.sdk.common.util.Utility
 import kotlinx.serialization.Serializable
 
 
@@ -75,6 +77,8 @@ class MainActivity : ComponentActivity() {
                     //StartScreen()
                 }
             }
+            val keyHash = Utility.getKeyHash(this)
+            Log.e("KakaoKeyHash", "이게 진짜 내 키해시야: $keyHash")
         }
     }
 }
