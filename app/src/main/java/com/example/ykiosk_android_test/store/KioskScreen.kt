@@ -474,7 +474,8 @@ fun MenuOptionDialog(
                         Text(
                             text = "${optionGroup.optionName} (최대 ${optionGroup.selectionNum}개 선택)",
                             style = MaterialTheme.typography.titleMedium,
-                            modifier = Modifier.padding(vertical = 8.dp)
+                            modifier = Modifier.padding(vertical = 8.dp),
+                            color = YKioskColors.TextPrimary
                         )
 
                         // 💡 6층: OptionCategoryDetailResponse (실제 선택지들)
