@@ -289,6 +289,39 @@ fun KioskScreenContent(
                                 onQuantityChange = onUpdateQuantity
                             )
                         }
+
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(10.dp) // 버튼 주변 여백
+                        ) {
+                            Button(
+                                onClick = onPlaceOrder,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .height(70.dp), // 키오스크니까 버튼을 시원하게 크게 만듦
+                                shape = RoundedCornerShape(12.dp),
+                                colors = ButtonDefaults.buttonColors(containerColor = Dark1),
+                                // 장바구니가 비었거나 전송 중이면 클릭 불가
+                                enabled = cartList.isNotEmpty() && !isLoading
+                            ) {
+                                if (isLoading) {
+                                    // 서버 응답 대기 중일 때 로딩 표시
+                                    CircularProgressIndicator(
+                                        color = Color.White,
+                                        modifier = Modifier.size(28.dp),
+                                        strokeWidth = 3.dp
+                                    )
+                                } else {
+                                    Text(
+                                        text = "주문 완료하기",
+                                        color = Color.White,
+                                        fontSize = 22.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                }
+                            }
+                        }
                     }
                 }
             }
