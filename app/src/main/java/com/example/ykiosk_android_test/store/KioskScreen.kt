@@ -2,6 +2,7 @@ package com.example.ykiosk_android_test.store
 
 import android.content.Context
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,6 +38,7 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -63,6 +65,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Devices
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.viewmodel.compose.viewModel
 import coil.compose.AsyncImage
@@ -110,6 +113,22 @@ fun KioskScreen(
         onAddToCart = {cartItem -> viewModel.addToCart(cartItem)},
         onUpdateQuantity = { item, delta ->
             viewModel.updateQuantity(item, delta) // 실제 로직 실행
+        },
+        // 💡 여기서 실제 ViewModel의 주문 함수를 실행하도록 연결합니다!
+        onPlaceOrder = {
+            viewModel.submitOrder(
+                context = context,
+                storeId = storeId,
+                deviceAddress = deviceAddress, // 블루투스 주소 전달
+                onSuccess = { orderNum ->
+                    // 페이지 이동 없이 토스트만 띄움
+                    Toast.makeText(context, "주문이 완료되었습니다! (번호: $orderNum)", Toast.LENGTH_LONG).show()
+                    // 필요하다면 여기서 다른 UI 상태 초기화 가능
+                },
+                onError = { errorMessage ->
+                    Toast.makeText(context, errorMessage, Toast.LENGTH_SHORT).show()
+                }
+            )
         }
     )
 
@@ -123,7 +142,8 @@ fun KioskScreenContent(
     cartList: List<CartItem>,
     onGroupSelected: (MenuGroupDetailResponse) -> Unit,
     onAddToCart: (CartItem) -> Unit,
-    onUpdateQuantity: (CartItem, Int) -> Unit
+    onUpdateQuantity: (CartItem, Int) -> Unit,
+    onPlaceOrder: () -> Unit
 ) {
     var selectedMenuForDialog by remember { mutableStateOf<MenuDetailResponse?>(null) }
     var showDialog by remember { mutableStateOf(false) }
@@ -671,6 +691,7 @@ fun CartItemRow(
 fun OrderScreenPrev() {
     var currentSelectedGroup by remember { mutableStateOf(dto.menuGroupDetailResDtoList.firstOrNull()) }
     val cartList = remember { mutableStateListOf<CartItem>() } // 실시간 반영되는 리스트
+    var isWaitingServer by remember { mutableStateOf(false) }
 
     Ykiosk_android_testTheme {
         KioskScreenContent(
@@ -692,13 +713,20 @@ fun OrderScreenPrev() {
                 } else {
                     cartList.add(newItem)
                 }
-            },onUpdateQuantity = { item, delta ->
+            },
+            onUpdateQuantity = { item, delta ->
                 val index = cartList.indexOf(item)
                 if (index != -1) {
                     val newQty = item.quantity + delta
                     if (newQty <= 0) cartList.removeAt(index)
                     else cartList[index] = item.copy(quantity = newQty)
                 }
+            },
+            // 💡 드디어 여기! "주문하기" 버튼을 눌렀을 때 실행될 가짜 로직
+            onPlaceOrder = {
+                // 프리뷰에서 버튼 동작을 확인하기 위해 로그를 찍거나 상태를 바꿉니다.
+                println("주문 버튼 클릭됨! 서버로 전송 중...")
+                isWaitingServer = true // 로딩 상태 시뮬레이션
             }
         )
     }

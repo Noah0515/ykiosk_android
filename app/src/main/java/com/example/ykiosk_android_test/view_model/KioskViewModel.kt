@@ -1,5 +1,6 @@
 package com.example.ykiosk_android_test.view_model
 
+import android.bluetooth.BluetoothAdapter
 import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.getValue
@@ -8,13 +9,20 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.ykiosk_android_test.DTO.request.OrderRequest
+import com.example.ykiosk_android_test.DTO.request.OrderedMenuDto
+import com.example.ykiosk_android_test.DTO.request.OrderedMenuOptionDto
 import com.example.ykiosk_android_test.DTO.response.MenuGroupDetailResponse
 import com.example.ykiosk_android_test.DTO.response.StoreMenuDetailResponse
 import com.example.ykiosk_android_test.DTO.response.StoreResponse
 import com.example.ykiosk_android_test.Item.CartItem
 import com.example.ykiosk_android_test.auth.RetrofitClient
+import com.example.ykiosk_android_test.bluetooth.BluetoothPrinterManager
 import com.google.gson.Gson
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -33,6 +41,9 @@ class KioskViewModel(
     var selectedGroup by mutableStateOf<MenuGroupDetailResponse?>(null)
 
     val cartList = mutableStateListOf<CartItem>()
+
+    var isOrdering by mutableStateOf(false)
+        private set
 
     fun addToCart(newItem: CartItem) {
         // 1. 기존 장바구니에 '메뉴ID'와 '선택한 옵션들'이 완전히 일치하는 항목이 있는지 확인
@@ -107,6 +118,75 @@ class KioskViewModel(
             var end = (i + 1) * maxLogSize
             end = if (end > message.length) message.length else end
             Log.d(tag, message.substring(start, end))
+        }
+    }
+
+    fun submitOrder(
+        context: Context,
+        storeId: String,
+        deviceAddress: String,
+        onSuccess: (Int) -> Unit,
+        onError: (String) -> Unit) {
+        if (cartList.isEmpty()) return
+
+        viewModelScope.launch {
+            isOrdering = true
+            try {
+                val request = OrderRequest(
+                    storeId = storeId,
+                    orderedMenus = cartList.map { cartItem ->
+                        OrderedMenuDto(
+                            menuId = cartItem.menu.menuId,
+                            quantity = cartItem.quantity,
+                            orderedMenuOptions = cartItem.selectedOptions.flatMap { (optionId, categories) ->
+                                categories.map { category ->
+                                    OrderedMenuOptionDto(
+                                        optionId = optionId,
+                                        categoryId = category.categoryId,
+                                        optionContent = category.optionContent
+                                    )
+                                }
+                            }
+                        )
+                    }
+                )
+
+                // 2. 💡 구축하신 RetrofitClient 사용
+                val apiService = RetrofitClient.getApiService(context)
+                val response = apiService.postOrder(request)
+
+                if (response.isSuccessful) {
+                    val orderNum = response.body() ?: -1
+                    printReceipt(orderNum, deviceAddress)
+                    cartList.clear()
+                    onSuccess(orderNum)
+                    Log.e("주문번호: ", response.body().toString())
+                } else {
+                    // 토큰 만료(401)나 서버 에러 처리
+                    onError("주문 실패: ${response.code()}")
+                }
+            } catch (e: Exception) {
+                onError("네트워크 연결을 확인해주세요: ${e.message}")
+            } finally {
+                isOrdering = false
+            }
+        }
+
+    }
+    private suspend fun printReceipt(orderNum: Int, deviceAddress: String) {
+        val printerManager = BluetoothPrinterManager(BluetoothAdapter.getDefaultAdapter())
+        Log.e("printReceipt ", "메소드 진입")
+        // 비동기로 연결 및 출력 시도
+        withContext(Dispatchers.IO) {
+            if (printerManager.connect(deviceAddress)) {
+                printerManager.printActualReceipt(
+                    orderNum = orderNum,
+                    cartList = cartList.toList(), // 현재 장바구니 복사본
+                    storeName = "가게1" // 필요시 매장명 전달
+                )
+                Log.e("printReceipt ", "출력")
+                printerManager.closeConnection()
+            }
         }
     }
 }
