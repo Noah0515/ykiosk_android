@@ -261,8 +261,10 @@ fun KioskScreenContent(
                         Box(
                             modifier = Modifier
                                 .weight(3f)
-                                .background(ChoicedBackground)
-                                .fillMaxSize(),
+                                .background(SoftSand,
+                                    shape = RoundedCornerShape(16.dp))
+                                .fillMaxSize()
+                                .padding(bottom = 16.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             LargeText2(
