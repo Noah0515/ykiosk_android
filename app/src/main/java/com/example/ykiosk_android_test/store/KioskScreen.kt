@@ -275,7 +275,8 @@ fun KioskScreenContent(
                         Box(
                             modifier = Modifier
                                 .weight(17f)
-                                .background(ChoicedBackground)
+                                .background(SoftSand,
+                                    shape = RoundedCornerShape(24.dp))
                                 .fillMaxSize()
                         ) {
                             CartSection(
