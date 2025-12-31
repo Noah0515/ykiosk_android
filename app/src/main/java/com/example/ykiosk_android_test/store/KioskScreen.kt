@@ -172,7 +172,7 @@ fun KioskScreenContent(
                                 .weight(3f)
                                 .padding(5.dp, 5.dp, 0.dp, 0.dp)
                                 .background(Gray,
-                                    RoundedCornerShape(topStart = 10.dp, topEnd = 0.dp, bottomStart = 0.dp, bottomEnd = 0.dp))
+                                    shape = RoundedCornerShape(24.dp))
                                 .fillMaxWidth()
                                 .customBorder(8.dp, bottom = true)
                             ,
