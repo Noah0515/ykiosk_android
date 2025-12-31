@@ -249,8 +249,9 @@ fun KioskScreenContent(
                 Box(// 담은 메뉴
                     modifier = Modifier
                         .weight(5f)
-                        .background(Color.Green)
-                        .padding(5.dp)
+                        .background(TerracottaRed2,
+                            shape = RoundedCornerShape(24.dp))
+                        .padding(10.dp)
                         .fillMaxSize()
                 ) {
                     Column(
