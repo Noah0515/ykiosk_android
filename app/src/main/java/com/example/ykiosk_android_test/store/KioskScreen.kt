@@ -278,6 +278,8 @@ fun KioskScreenContent(
                                 .background(SoftSand,
                                     shape = RoundedCornerShape(24.dp))
                                 .fillMaxSize()
+                                .padding(top = 16.dp)
+
                         ) {
                             CartSection(
                                 cartList = cartList,
