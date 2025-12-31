@@ -5,6 +5,7 @@ import android.bluetooth.BluetoothAdapter
 import android.bluetooth.BluetoothDevice
 import android.bluetooth.BluetoothSocket
 import android.graphics.Bitmap
+import com.example.ykiosk_android_test.Item.CartItem
 import com.example.ykiosk_android_test.print.EscPosCommands
 import com.example.ykiosk_android_test.print.ImageUtils
 import kotlinx.coroutines.Dispatchers
@@ -139,6 +140,69 @@ class BluetoothPrinterManager(private val bluetoothAdapter: BluetoothAdapter?) {
             sendData(bytes)
         } catch (e: Exception) {
             e.printStackTrace()
+        }
+    }
+
+    suspend fun printActualReceipt(
+        orderNum: Int,
+        cartList: List<CartItem>, // 장바구니 리스트 타입에 맞춰 수정하세요
+        storeName: String
+    ): Boolean {
+        return try {
+            // 1. 프린터 초기화
+            sendData(EscPosCommands.RESET)
+
+            // 2. [상단] 매장명 및 주문번호 (이미지 방식)
+            sendData(EscPosCommands.ALIGN_CENTER)
+            val headerText = """
+            [ $storeName ]
+            주문 번호
+        """.trimIndent()
+            printImage(ImageUtils.textToBitmap(headerText, textSize = 28f))
+
+            // 주문번호는 아주 크게 출력
+            printImage(ImageUtils.textToBitmap("$orderNum", textSize = 80f, isBold = true))
+
+            // 3. [중간] 상품 목록 (왼쪽 정렬)
+            sendData(EscPosCommands.ALIGN_LEFT)
+            val sb = StringBuilder()
+            sb.append("\n\n")
+            sb.append("--------------------------------\n")
+            sb.append(String.format("%-32s %6s\n", "상품명", "수량"))
+            sb.append("--------------------------------\n")
+
+            var totalAmount = 0
+            cartList.forEach { item ->
+                val name = item.menu.menuName
+                val qty = item.quantity
+
+                // 한글 정렬을 위해 줄바꿈 고려
+                sb.append(String.format("%-32s %6s\n", name, qty))
+
+                // 선택된 옵션이 있다면 추가
+                item.selectedOptions.forEach { (_, categories) ->
+                    categories.forEach { category ->
+                        sb.append("  + ${category.optionContent}\n")
+                    }
+                }
+            }
+            sb.append("--------------------------------\n")
+            sb.append("주문시간: ${java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(java.util.Date())}\n\n")
+
+            // 본문 이미지 출력
+            printImage(ImageUtils.textToBitmap(sb.toString(), textSize = 22f))
+
+            // 4. 하단 메시지 및 용지 배출
+            sendData(EscPosCommands.ALIGN_CENTER)
+            printImage(ImageUtils.textToBitmap("이용해 주셔서 감사합니다!\n\n", textSize = 24f))
+            sb.append("\n\n")
+            sendData(EscPosCommands.FEED_PAPER)
+            sendData(EscPosCommands.FEED_PAPER)
+
+            true
+        } catch (e: Exception) {
+            e.printStackTrace()
+            false
         }
     }
 
