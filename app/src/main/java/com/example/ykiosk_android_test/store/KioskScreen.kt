@@ -223,7 +223,9 @@ fun KioskScreenContent(
                                 .fillMaxSize()
                                 .padding(5.dp, 5.dp, 0.dp, 0.dp)
                                 .customBorder(borderWidth = 8.dp, bottom = true)
-                                .background(MaterialTheme.colorScheme.primary),
+                                .background(MaterialTheme.colorScheme.primary,
+                                    shape = RoundedCornerShape(24.dp)
+                                    ),
                             contentAlignment = Alignment.Center
                         ) {
                             LargeText4(text=storeMenuDetail?.storeName ?: "")
