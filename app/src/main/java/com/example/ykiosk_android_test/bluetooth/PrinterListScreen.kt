@@ -22,7 +22,8 @@ import androidx.compose.ui.unit.dp
 
 @Composable
 fun PrinterListScreen(
-    onDeviceSelected: (BluetoothDeviceDomain) -> Unit
+    onDeviceSelected: (BluetoothDeviceDomain) -> Unit,
+    storeId: String
 ) {
     val context = LocalContext.current
 
