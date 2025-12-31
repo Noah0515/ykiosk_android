@@ -139,6 +139,8 @@ fun OrderScreen(onNavigateToOrderComplete : () -> Unit, str : String = "식당 �
                                 .background(MenuAreaBackgroundWhite)
                                 .fillMaxSize()
                         ) {
+
+                            /*
                             Column (
 
                             ) {
@@ -153,12 +155,14 @@ fun OrderScreen(onNavigateToOrderComplete : () -> Unit, str : String = "식당 �
 
                                     ) {
                                         GroupButton(
+                                            isSelected = false,
                                             text = "커피",
                                             modifier = Modifier
                                                 .padding(5.dp, 0.dp, 5.dp, 2.dp)
                                         ) { }
 
                                         GroupButton(
+                                            isSelected = false,
                                             text = "차",
                                             modifier = Modifier
                                                 .padding(5.dp, 0.dp)
@@ -175,7 +179,7 @@ fun OrderScreen(onNavigateToOrderComplete : () -> Unit, str : String = "식당 �
                                 ) {
 
                                 }
-                            }
+                            }*/
                         }
                     }
                 }
